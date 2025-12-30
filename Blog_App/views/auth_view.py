@@ -93,6 +93,6 @@ def login_page(request):
                 login(request, user)
                 return redirect('index_page')
             else:
-                errors['invalid'] = 'Invalid username/email or password.'
+                errors['general'] = 'Invalid username/email or password.'
         
     return render(request, 'auth/login_page.html', {'errors': errors, 'data': request.POST})
