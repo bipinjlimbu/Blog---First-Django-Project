@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 def register_page(request):
     errors = {}
@@ -10,8 +13,60 @@ def register_page(request):
         password = request.POST.get('password', '').strip()
         confirm_password = request.POST.get('confirm_password', '').strip()
 
+        if not username:
+            errors['username'] = 'Username is required.'
+        elif len(username) < 3:
+            errors['username'] = 'Username must be at least 3 characters long.'
+        elif len(username) > 30:
+            errors['username'] = 'Username cannot exceed 30 characters.'
+        elif User.objects.filter(username=username).exists():
+            errors['username'] = 'Username is already taken.'
+
+        if not first_name:
+            errors['first_name'] = 'First name is required.'
+        elif not first_name.isalpha():
+            errors['first_name'] = 'First name must contain only letters.'
+        elif len(first_name) > 30:
+            errors['first_name'] = 'First name cannot exceed 30 characters.'
         
-    return render(request, 'auth/register_page.html')
+        if not last_name:
+            errors['last_name'] = 'Last name is required.'
+        elif not last_name.isalpha():
+            errors['last_name'] = 'Last name must contain only letters.'
+        elif len(last_name) > 30:
+            errors['last_name'] = 'Last name cannot exceed 30 characters.'
+
+        if not email:
+            errors['email'] = 'Email is required.'
+        elif User.objects.filter(email=email).exists():
+            errors['email'] = 'Email is already registered.'
+        
+        if not password:
+            errors['password'] = 'Password is required.'
+        elif len(password) < 6:
+            errors['password'] = 'Password must be at least 6 characters long.'
+        
+        if not confirm_password:
+            errors['confirm_password'] = 'Please confirm your password.'
+        elif confirm_password != password:
+            errors['confirm_password'] = 'Passwords do not match.'
+
+        if not errors:
+            user = User.objects.create_user(
+                username=username,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                password=password
+            )
+            user.save()
+            messages.success(request, 'Registration successful. You can now log in.')
+            return redirect('login_page')
+        else:
+            return render(request, 'auth/register_page.html', {'errors': errors,'data':request.POST})
+        
+    else:
+        return render(request, 'auth/register_page.html')
 
 def login_page(request):
     return render(request, 'auth/login_page.html')
