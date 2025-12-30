@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog Navbar</title>
-
+  <title>Navbar</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="bg-gray-100">
 
   <!-- Navbar -->
@@ -23,30 +21,39 @@
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex items-center space-x-6">
-          <a href="/" class="text-gray-600 hover:text-indigo-600 transition">
-            Home
-          </a>
-          <a href="/blog" class="text-gray-600 hover:text-indigo-600 transition">
-            Blog
-          </a>
-          <a href="/categories" class="text-gray-600 hover:text-indigo-600 transition">
-            Categories
-          </a>
-          <a href="/about" class="text-gray-600 hover:text-indigo-600 transition">
-            About
-          </a>
-          <a href="/contact" class="text-gray-600 hover:text-indigo-600 transition">
-            Contact
-          </a>
+          <a href="/" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
+          <a href="/blog" class="text-gray-600 hover:text-indigo-600 transition">Blog</a>
+          <a href="/categories" class="text-gray-600 hover:text-indigo-600 transition">Categories</a>
+          <a href="/about" class="text-gray-600 hover:text-indigo-600 transition">About</a>
+          <a href="/contact" class="text-gray-600 hover:text-indigo-600 transition">Contact</a>
+
+          {% if not request.user.is_authenticated %}
           <!-- Login Button -->
           <a href="/login" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
             Login
           </a>
+          {% else %}
+          <!-- User Profile Dropdown -->
+          <div class="relative group">
+            <button class="flex items-center space-x-2 focus:outline-none">
+              <span class="text-gray-600 hover:text-indigo-600 transition">{{ request.user.username }}</span>
+              <svg class="w-4 h-4 text-gray-600 group-hover:text-indigo-600 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
+              <a href="/profile" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-indigo-600 transition">Profile</a>
+              <a href="/logout" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-indigo-600 transition">Logout</a>
+            </div>
+          </div>
+          {% endif %}
         </div>
 
         <!-- Mobile Menu Button -->
-        <button id="menu-btn" class="md:hidden text-2xl text-gray-600">
-          ☰
+        <button id="menu-btn" class="md:hidden text-gray-600 focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
         </button>
       </div>
     </div>
@@ -59,18 +66,26 @@
         <a href="/categories" class="block text-gray-600 hover:text-indigo-600">Categories</a>
         <a href="/about" class="block text-gray-600 hover:text-indigo-600">About</a>
         <a href="/contact" class="block text-gray-600 hover:text-indigo-600">Contact</a>
-        <!-- Login Button for Mobile -->
+
+        {% if not request.user.is_authenticated %}
         <a href="/login" class="block bg-indigo-600 text-white text-center px-4 py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">
           Login
         </a>
+        {% else %}
+        <a href="/profile" class="block text-gray-600 hover:text-indigo-600">Profile</a>
+        <a href="/logout" class="block text-gray-600 hover:text-indigo-600">Logout</a>
+        {% endif %}
       </div>
     </div>
   </nav>
 
   <!-- Mobile Menu Script -->
   <script>
-    document.getElementById("menu-btn").addEventListener("click", function () {
-      document.getElementById("mobile-menu").classList.toggle("hidden");
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
     });
   </script>
 
