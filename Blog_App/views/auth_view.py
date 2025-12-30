@@ -69,4 +69,25 @@ def register_page(request):
         return render(request, 'auth/register_page.html')
 
 def login_page(request):
-    return render(request, 'auth/login_page.html')
+    errors = {}
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '').strip()
+
+        if not username:
+            errors['username'] = 'Username is required.'
+        elif not User.objects.filter(username=username).exists():
+            errors['username'] = 'Username does not exist.'
+
+        if not password:
+            errors['password'] = 'Password is required.'
+        
+        if not errors:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index_page')
+            else:
+                errors['password'] = 'Incorrect password.'
+        
+    return render(request, 'auth/login_page.html', {'errors': errors, 'data': request.POST})
