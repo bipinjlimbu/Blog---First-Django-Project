@@ -2,17 +2,88 @@
 <head>
     <title>Home Page</title>
     {% load static %}
-<link  href ="{% static 'src/styles.css' %}" rel="stylesheet" />
+    <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-50">
+
     {% include 'components/_navbar.html' %}
 
-    <div class="container mx-auto mt-10">
-        <h1 class="text-4xl font-bold mb-6">Welcome to My Blog</h1>
-        <p class="text-lg text-gray-700">Discover amazing content and stay updated with the latest posts.</p>
-    </div>
+    <!-- Hero Section -->
+    <section class="bg-indigo-600 text-white py-20">
+        <div class="max-w-5xl mx-auto text-center px-4">
+            <h1 class="text-5xl font-bold mb-4">Welcome to My Blog</h1>
+            <p class="text-xl opacity-90 mb-6">Insights, tutorials, and stories about web development, tech, and more.</p>
+            <a href="#posts" class="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition">Explore Posts</a>
+        </div>
+    </section>
+
+    <!-- Featured Blog Posts -->
+    <section id="posts" class="max-w-7xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold mb-10 text-center text-gray-800">Latest Posts</h2>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+            <!-- Card 1 -->
+            <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition overflow-hidden">
+                <img src="https://via.placeholder.com/600x300" class="w-full" alt="Blog Image 1">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">How to Build a Django Blog</h3>
+                    <p class="text-gray-600 mb-4">Learn step by step how to create a fully functional blog using Django and Tailwind CSS.</p>
+                    <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition overflow-hidden">
+                <img src="https://via.placeholder.com/600x300" class="w-full" alt="Blog Image 2">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Top 10 JavaScript Tricks</h3>
+                    <p class="text-gray-600 mb-4">Discover cool JavaScript tricks and best practices that every developer should know.</p>
+                    <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition overflow-hidden">
+                <img src="https://via.placeholder.com/600x300" class="w-full" alt="Blog Image 3">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">UI Design Tips for Beginners</h3>
+                    <p class="text-gray-600 mb-4">Learn how to create modern and attractive UI designs even if you’re just starting out.</p>
+                    <a href="#" class="text-indigo-600 font-semibold hover:underline">Read More →</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Popular Categories -->
+    <section class="bg-gray-100 py-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-10 text-gray-800">Popular Categories</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition cursor-pointer">Web Development</span>
+                <span class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition cursor-pointer">Python</span>
+                <span class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition cursor-pointer">JavaScript</span>
+                <span class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition cursor-pointer">UI/UX Design</span>
+                <span class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition cursor-pointer">Tech News</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16">
+        <div class="max-w-5xl mx-auto text-center px-4 bg-indigo-50 rounded-xl shadow-md">
+            <h2 class="text-3xl font-bold mb-4 text-gray-800">Subscribe to our Newsletter</h2>
+            <p class="text-gray-600 mb-6">Get the latest posts delivered straight to your inbox.</p>
+            <form class="flex flex-col sm:flex-row justify-center gap-4">
+                <input type="email" placeholder="Enter your email" class="px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-1" required>
+                <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition font-semibold">Subscribe</button>
+            </form>
+        </div>
+    </section>
 
     {% include 'components/_footer.html' %}
+
 </body>
 </html>
