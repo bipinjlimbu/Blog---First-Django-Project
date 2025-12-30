@@ -6,48 +6,71 @@
   <title>Login</title>
   {% load static %}
   <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600">
+<body class="min-h-screen flex flex-col">
 
-  <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+  {% include 'components/_navbar.html' %}
 
-    <form method="POST" class="space-y-4">
-      {% csrf_token %}
+  <main class="flex-grow flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 py-12">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
 
-      <!-- Username -->
-      <div>
-        <label class="block text-sm font-medium text-gray-600 mb-1">Username or Email</label>
-        <input type="text" name="username" value="{{ data.username }}"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-        <p class="text-red-500 text-sm">{{ errors.username }}</p>
-      </div>
+      <form method="POST" class="space-y-4">
+        {% csrf_token %}
 
-      <!-- Password -->
-      <div>
-        <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
-        <input type="password" name="password" value="{{data.password}}"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-        <p class="text-red-500 text-sm">{{ errors.password }}</p>
-      </div>
+        <!-- Username or Email -->
+        <div>
+          <label class="block text-sm font-medium text-gray-600 mb-1">Username or Email</label>
+          <input 
+            type="text" 
+            name="username" 
+            value="{{ data.username|default:'' }}"
+            placeholder="Enter your username or email"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+          />
+          {% if errors.username %}
+            <p class="text-red-500 text-sm mt-1">{{ errors.username }}</p>
+          {% endif %}
+        </div>
 
-      <!-- General error -->
-      {% if errors.general %}
-        <p class="text-red-500 text-sm text-center">{{ errors.general }}</p>
-      {% endif %}
+        <!-- Password -->
+        <div>
+          <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+          <input 
+            type="password" 
+            name="password" 
+            value="{{ data.password|default:'' }}"
+            placeholder="Enter your password"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+          />
+          {% if errors.password %}
+            <p class="text-red-500 text-sm mt-1">{{ errors.password }}</p>
+          {% endif %}
+        </div>
 
-      <!-- Submit -->
-      <button type="submit"
-        class="w-full mt-4 bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
-        Login
-      </button>
-    </form>
+        <!-- General error -->
+        {% if errors.general %}
+          <p class="text-red-500 text-sm text-center mt-2">{{ errors.general }}</p>
+        {% endif %}
 
-    <p class="text-center text-sm text-gray-500 mt-6">
-      Don’t have an account?
-      <a href="/register" class="text-indigo-600 hover:underline">Register</a>
-    </p>
-  </div>
+        <!-- Submit Button -->
+        <button 
+          type="submit"
+          class="w-full mt-4 bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition"
+        >
+          Login
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-gray-500 mt-6">
+        Don’t have an account? 
+        <a href="/register" class="text-indigo-600 hover:underline">Register</a>
+      </p>
+    </div>
+  </main>
+
+  {% include 'components/_footer.html' %}
 
 </body>
 </html>
