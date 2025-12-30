@@ -89,5 +89,8 @@ def login_page(request):
                 return redirect('index_page')
             else:
                 errors['password'] = 'Incorrect password.'
+
+        else:
+            errors['general'] = 'Please use valid credentials.'
         
     return render(request, 'auth/login_page.html', {'errors': errors, 'data': request.POST})
