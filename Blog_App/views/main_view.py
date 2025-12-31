@@ -1,9 +1,44 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from Blog_App.models import Blogs
+from django.contrib import messages
 
 def index_page(request):
     return render(request, 'main/index_page.html')
 
 @login_required
 def create_blog(request):
+    error = {}
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        category = request.POST.get('category')
+        content = request.POST.get('content')
+        image = request.FILES.get('image')
+
+        if not title:
+            error['title'] = 'Title is required.'
+
+        if not category:
+            error['category'] = 'Category is required.'
+
+        if not content:
+            error['content'] = 'Content is required.'
+
+        if error:
+            return render(request, 'main/create_blog.html', {'error': error, 'data': request.POST})
+
+        try:
+            blog = Blogs(
+                title=title,
+                category=category,
+                content=content,
+                author=request.user,
+            )
+            blog.save()
+            messages.success(request, 'Blog created successfully!')
+            return redirect('index')
+        
+        except Exception as e:
+            return render(request, 'main/create_blog.html', {'error[general]': str(e)})
+            
     return render(request, 'main/create_blog.html')

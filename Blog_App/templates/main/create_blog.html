@@ -33,9 +33,10 @@
           type="text"
           name="title"
           placeholder="Enter blog title"
-          required
           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          value="{{data.title}}"
         />
+        <p class="text-red-500">{{ error.title }}</p>
       </div>
 
       <!-- Category -->
@@ -45,8 +46,8 @@
         </label>
         <select
           name="category"
-          required
           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          value="{{data.category}}"
         >
           <option value="">Select category</option>
           <option value="tech">Technology</option>
@@ -54,6 +55,7 @@
           <option value="travel">Travel</option>
           <option value="education">Education</option>
         </select>
+        <p class="text-red-500">{{ error.category }}</p>
       </div>
 
       <!-- Blog Image -->
@@ -66,7 +68,9 @@
           name="image"
           accept="image/*"
           class="w-full border rounded-lg p-2"
+            value="{{data.image}}"
         />
+        <p class="text-red-500">{{ error.image }}</p>
       </div>
 
       <!-- Blog Content -->
@@ -78,10 +82,12 @@
           name="content"
           rows="8"
           placeholder="Write your blog content here..."
-          required
           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        ></textarea>
+        >{{data.content}}</textarea>
+        <p class="text-red-500">{{ error.content }}</p>
       </div>
+
+      <p class="text-red-500">{{ error.general }}</p>
 
       <!-- Buttons -->
       <div class="flex items-center gap-4">
