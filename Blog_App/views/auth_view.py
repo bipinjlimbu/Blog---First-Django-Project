@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 
@@ -61,7 +61,7 @@ def register_page(request):
             )
             user.save()
             messages.success(request, 'Registration successful. You can now log in.')
-            return redirect('login_page')
+            return redirect('login')
         else:
             return render(request, 'auth/register_page.html', {'errors': errors,'data':request.POST})
         
@@ -91,8 +91,12 @@ def login_page(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('index_page')
+                return redirect('index')
             else:
                 errors['general'] = 'Invalid username/email or password.'
         
     return render(request, 'auth/login_page.html', {'errors': errors, 'data': request.POST})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login_page')
