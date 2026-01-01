@@ -39,6 +39,7 @@ def create_blog(request):
             return redirect('index')
         
         except Exception as e:
-            return render(request, 'main/create_blog.html', {'error[general]': str(e)})
+            print(e)
+            return render(request, 'main/create_blog.html', {'error[general]': 'An error occurred while creating the blog. Please try again.', 'data': request.POST})
             
     return render(request, 'main/create_blog.html')

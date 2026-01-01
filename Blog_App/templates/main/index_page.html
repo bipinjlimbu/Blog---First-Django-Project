@@ -8,7 +8,15 @@
 <body class="bg-gray-50">
 
     {% include 'components/_navbar.html' %}
-
+    
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+        alert("{{ message }}");
+    </script>
+    {% endfor %}
+    {% endif %}
+    
     <!-- Hero Section -->
     <section class="bg-indigo-600 text-white py-20">
         <div class="max-w-5xl mx-auto text-center px-4">
