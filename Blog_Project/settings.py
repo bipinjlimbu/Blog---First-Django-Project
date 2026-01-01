@@ -130,3 +130,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'  # Redirect to login page if not authenticated
+
+# for image insertion
+MEDIA_URL = '/media/'
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
