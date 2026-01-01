@@ -32,6 +32,7 @@ def create_blog(request):
                 title=title,
                 category=category,
                 content=content,
+                image=image,
                 author=request.user,
             )
             blog.save()
