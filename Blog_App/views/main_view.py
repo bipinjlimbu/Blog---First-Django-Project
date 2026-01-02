@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from Blog_App.models import Blogs
+from ..models import Blogs
 from django.contrib import messages
 
 def index_page(request):
-    return render(request, 'main/index_page.html')
+    blogs = Blogs.objects.all()
+    return render(request, 'main/index_page.html',{'blogs':blogs})
 
 @login_required
 def create_blog(request):
