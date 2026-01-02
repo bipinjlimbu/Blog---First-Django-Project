@@ -6,12 +6,12 @@ from django.contrib import messages
 def register_page(request):
     errors = {}
     if request.method == 'POST':
-        username = request.POST.get('username', '').strip()
-        first_name = request.POST.get('first_name', '').strip()
-        last_name = request.POST.get('last_name', '').strip()
-        email = request.POST.get('email', '').strip()
-        password = request.POST.get('password', '').strip()
-        confirm_password = request.POST.get('confirm_password', '').strip()
+        username = request.POST.get('username').strip()
+        first_name = request.POST.get('first_name').strip()
+        last_name = request.POST.get('last_name').strip()
+        email = request.POST.get('email').strip()
+        password = request.POST.get('password').strip()
+        confirm_password = request.POST.get('confirm_password').strip()
 
         if not username:
             errors['username'] = 'Username is required.'
@@ -71,8 +71,8 @@ def register_page(request):
 def login_page(request):
     errors = {}
     if request.method == 'POST':
-        identifier = request.POST.get('username', '').strip()
-        password = request.POST.get('password', '').strip()
+        identifier = request.POST.get('username').strip()
+        password = request.POST.get('password').strip()
 
         if not identifier:
             errors['username'] = 'Username or Email is required.'
