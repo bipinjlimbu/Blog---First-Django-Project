@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ..models import Blogs
 from django.contrib import messages
@@ -45,3 +45,12 @@ def create_blog(request):
             return render(request, 'main/create_blog.html', {'error[general]': 'An error occurred while creating the blog. Please try again.', 'data': request.POST})
             
     return render(request, 'main/create_blog.html')
+
+def single_blog(request,id):
+    try:
+        blog = get_object_or_404(Blogs,id=id)  
+        print(blog)
+        return render(request,'main/single_blog.html',{'blog':blog})
+    except Exception as e:
+        print("Error: ",e)
+    return render(request,'main/single_blog.html')
