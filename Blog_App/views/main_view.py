@@ -54,3 +54,17 @@ def single_blog(request,id):
     except Exception as e:
         print("Error: ",e)
     return render(request,'main/single_blog.html')
+
+def delete_blog(request, id):
+    try:
+        blog = get_object_or_404(Blogs,id=id)
+        if blog.author == request.user:
+            blog.delete()
+            messages.success(request,"Blog Deleted Successfully.")
+            return redirect('index')
+        
+        else:
+            return render(request, 'main/single_blog.html',{'errors':'You are not Authorized to Delete Bro','blog':blog})
+
+    except Exception as e:
+        print(e)

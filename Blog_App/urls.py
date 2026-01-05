@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.main_view import index_page, create_blog, single_blog
+from .views.main_view import index_page, create_blog, single_blog, delete_blog
 from .views.auth_view import login_page, register_page, logout_view
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('create-blog/', create_blog, name='create_blog'),
     path('blog/<int:id>/', single_blog, name='single_blog'),
+    path('blog/delete/<int:id>/', delete_blog, name='delete_blog'),
 ]

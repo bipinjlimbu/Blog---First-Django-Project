@@ -7,6 +7,11 @@
 
 <body>
  {% include "components/_navbar.html" %}
+
+ {% if errors %}
+        <script>alert("{{ errors }}");</script>
+    {% endif %}
+
 <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white rounded-lg shadow-md mt-10">
   <!-- Blog Image -->
    {% if blog.image %}
@@ -34,6 +39,7 @@
     <p><strong>Posted by </strong>{{blog.author}} </p>
   </div>
   <!-- Action Buttons -->
+   {% if blog.author == request.user %}
   <div class="flex space-x-4">
     <button
       type="button"
@@ -41,13 +47,14 @@
     >
       Edit
     </button>
-    <button
+    <button onclick="return confirm('Delete GArne ho Vai?')"
       type="button"
       class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
-    >
-      Delete
+
+    ><a href="/blog/delete/{{blog.id}}"> Delete </a>
     </button>
   </div>
+  {% endif %}
 </section>
 {% include "components/_footer.html" %}
 </body>
