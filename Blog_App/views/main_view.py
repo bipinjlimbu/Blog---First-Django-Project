@@ -55,6 +55,9 @@ def single_blog(request,id):
         print("Error: ",e)
     return render(request,'main/single_blog.html')
 
+def edit_blog(request, id):
+    return render(request, 'main/edit_blog.html')
+
 def delete_blog(request, id):
     try:
         blog = get_object_or_404(Blogs,id=id)
