@@ -4,7 +4,7 @@ from ..models import Blogs
 from django.contrib import messages
 
 def index_page(request):
-    blogs = Blogs.objects.all()
+    blogs = Blogs.objects.all().order_by('-created_at')
     return render(request, 'main/index_page.html',{'blogs':blogs})
 
 @login_required
