@@ -57,7 +57,40 @@ def single_blog(request,id):
 
 @login_required
 def edit_blog(request, id):
+    error = {}
     blog = get_object_or_404(Blogs,id=id)
+
+    if blog.author != request.user:
+        return redirect('single_blog',blog.id)
+    
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        category = request.POST.get('category')
+        content = request.POST.get('content')
+        image = request.FILES.get('image')
+
+        if not title:
+            error['title'] = 'Title is required.'
+
+        if not category:
+            error['category'] = 'Category is required.'
+
+        if not content:
+            error['content'] = 'Content is required.'
+
+        if error:
+            return render(request, 'main/edit_blog.html', {'error': error, 'blog': request.POST})
+        
+        blog.title = title
+        blog.category = category
+        blog.content = content
+        
+        if image:
+            blog.image = image
+
+        blog.save()
+        messages.success(request,'Blog Updated Successfully.')
+        return redirect('single_blog',blog.id)
 
     return render(request, 'main/edit_blog.html',{'blog':blog})
 
