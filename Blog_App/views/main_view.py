@@ -79,7 +79,7 @@ def edit_blog(request, id):
             error['content'] = 'Content is required.'
 
         if error:
-            return render(request, 'main/edit_blog.html', {'error': error, 'blog': request.POST})
+            return render(request, 'main/edit_blog.html', {'error': error, 'blog': blog})
         
         blog.title = title
         blog.category = category
