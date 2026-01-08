@@ -87,9 +87,11 @@
 
         <p class="text-red-500">{{ error.general }}</p>
 
+        {% if request.user.is_superuser %}
         <div>
           <input type="checkbox" name="is_featured" /> Add to Featured Blogs
         </div>
+        {% endif %}
 
         <!-- Buttons -->
         <div class="flex items-center gap-4">
