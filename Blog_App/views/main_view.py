@@ -5,6 +5,7 @@ from django.contrib import messages
 
 def index_page(request):
     blogs = Blogs.objects.all().order_by('-created_at')
+    print(blogs)
     return render(request, 'main/index_page.html',{'blogs':blogs})
 
 @login_required
@@ -15,6 +16,7 @@ def create_blog(request):
         category = request.POST.get('category')
         content = request.POST.get('content')
         image = request.FILES.get('image')
+        is_featured = request.POST.get('is_featured') == 'on'
 
         if not title:
             error['title'] = 'Title is required.'
@@ -24,6 +26,7 @@ def create_blog(request):
 
         if not content:
             error['content'] = 'Content is required.'
+
 
         if error:
             return render(request, 'main/create_blog.html', {'error': error, 'data': request.POST})
@@ -35,6 +38,7 @@ def create_blog(request):
                 content=content,
                 image=image,
                 author=request.user,
+                is_featured=is_featured
             )
             blog.save()
             messages.success(request, 'Blog created successfully!')
@@ -68,6 +72,7 @@ def edit_blog(request, id):
         category = request.POST.get('category')
         content = request.POST.get('content')
         image = request.FILES.get('image')
+        is_featured = request.POST.get('is_featured') == 'on'
 
         if not title:
             error['title'] = 'Title is required.'
@@ -84,6 +89,7 @@ def edit_blog(request, id):
         blog.title = title
         blog.category = category
         blog.content = content
+        blog.is_featured = is_featured
         
         if image:
             blog.image = image
