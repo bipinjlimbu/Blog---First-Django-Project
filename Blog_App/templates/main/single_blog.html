@@ -45,7 +45,7 @@
     <p><strong>Posted by </strong>{{blog.author}} </p>
   </div>
   <!-- Action Buttons -->
-   {% if blog.author == request.user %}
+   {% if blog.author == request.user or request.user.is_superuser %}
   <div class="flex space-x-4">
     <button
       type="button"

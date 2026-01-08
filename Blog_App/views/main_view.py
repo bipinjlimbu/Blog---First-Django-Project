@@ -64,7 +64,7 @@ def edit_blog(request, id):
     error = {}
     blog = get_object_or_404(Blogs,id=id)
 
-    if blog.author != request.user:
+    if blog.author != request.user and not request.user.is_superuser:
         return redirect('single_blog',blog.id)
     
     if request.method == 'POST':
@@ -104,7 +104,7 @@ def edit_blog(request, id):
 def delete_blog(request, id):
     try:
         blog = get_object_or_404(Blogs,id=id)
-        if blog.author == request.user:
+        if blog.author == request.user or request.user.is_superuser:
             blog.delete()
             messages.success(request,"Blog Deleted Successfully.")
             return redirect('index')
