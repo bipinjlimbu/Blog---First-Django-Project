@@ -8,6 +8,7 @@ class Blogs(models.Model):
     category = models.CharField(max_length=100)
     image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
     content = models.TextField()
+    is_featured = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
