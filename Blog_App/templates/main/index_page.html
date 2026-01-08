@@ -31,6 +31,48 @@
         </div>
     </section>
 
+    <!-- Featured Blogs -->
+    {% if featured %}
+    <section class="max-w-7xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold mb-10 text-center text-indigo-700">
+            ⭐ Featured Blogs
+        </h2>
+
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {% for blog in featured %}
+            <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition overflow-hidden relative border-2 border-indigo-500">
+
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}"
+                        class="w-full h-48 object-cover"
+                        alt="{{ blog.title }}">
+                {% endif %}
+
+                <span class="absolute top-4 left-4 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full shadow">
+                    FEATURED
+                </span>
+
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 line-clamp-2">
+                        {{ blog.title }}
+                    </h3>
+
+                    <p class="text-gray-600 mb-4 line-clamp-3">
+                        {{ blog.content }}
+                    </p>
+
+                    <a href="/blog/{{ blog.id }}"
+                    class="text-indigo-600 font-semibold hover:underline">
+                        Read More →
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+
     <!-- Blog Posts -->
     <section id="posts" class="max-w-7xl mx-auto px-4 py-16">
         <h2 class="text-3xl font-bold mb-10 text-center text-gray-800">

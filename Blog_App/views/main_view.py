@@ -5,8 +5,8 @@ from django.contrib import messages
 
 def index_page(request):
     blogs = Blogs.objects.all().order_by('-created_at')
-    print(blogs)
-    return render(request, 'main/index_page.html',{'blogs':blogs})
+    featured = Blogs.objects.filter(is_featured = 1).order_by('-created_at')
+    return render(request, 'main/index_page.html',{'blogs':blogs,'featured':featured})
 
 @login_required
 def create_blog(request):
